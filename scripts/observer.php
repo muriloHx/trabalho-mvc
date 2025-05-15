@@ -15,15 +15,15 @@ class User implements Investidor
 
     public function update(float $val)
     {
-        echo "Olá " . $this->nome . "O valor da sua ação é " . $val;
+        echo "Olá " . $this->nome . ", O valor da sua ação é " . $val . "\n";
     }
 }
 
-//subject
+//subject, no padrao MVC sempre fica no MODEL. já os observers, podem ficar em outras partes
 class Acao
 {
     private float $valor;
-    private $acionistas = [];
+    private $acionistas = []; // lista que armazena todos os 'ouvintes' do subject
 
     public function __construct(float $valAcaoInicial)
     {
@@ -39,7 +39,7 @@ class Acao
     public function remover(Investidor $inv)
     {
         $k = array_search($inv, $this->acionistas, true);
-        if ($k === true) {
+        if ($k !== false) {
             unset($this->acionistas[$k]);
         }
     }
@@ -65,3 +65,13 @@ $petrobras->add($ac1);
 $petrobras->add($ac2);
 
 $petrobras->alterarValor(90000);
+
+$petrobras->remover($ac1);
+
+//simular variacoes aleatorias 
+echo "\n";
+for ($i = 0; $i < 5; $i++) {
+    $val = rand(1000, 10000);
+    $petrobras->alterarValor($val);
+    sleep(1);
+}
