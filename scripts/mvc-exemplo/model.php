@@ -1,16 +1,20 @@
 <?php
 class ItemModel
 {
-    private $items = ['exemplo1']; // Armazena os itens
-    // Adiciona um item à lista
-    public function addItem($item)
+    public function __construct()
     {
-        array_push($this->items, $item);
+        if (!isset($_SESSION['items'])) {
+            $_SESSION['items'] = ['exemplo1'];
+        }
     }
 
-    // Retorna todos os itens
+    public function addItem($item)
+    {
+        $_SESSION['items'][] = $item;
+    }
+
     public function getItems()
     {
-        return $this->items;
+        return $_SESSION['items'];
     }
 }

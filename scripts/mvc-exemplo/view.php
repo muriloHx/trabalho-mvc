@@ -1,12 +1,22 @@
 <?php
+session_start();
 require_once("control.php");
-$controller = new Control();
 
+$controller = new Control();
 $items = $controller->getItems();
 
-if (isset($_POST['mensagem'])) {
+if (isset($_POST['mensagem']) && trim($_POST['mensagem']) !== '') {
     $msg = $_POST['mensagem'];
     $controller->addItem($msg);
+
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+if (isset($_POST['limpar'])) {
+    unset($_SESSION['items']);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
 }
 
 ?>
@@ -25,7 +35,7 @@ if (isset($_POST['mensagem'])) {
         <ul>
             <?php
             foreach ($items as $nomes) {
-                echo '<li>' . $nomes . '</li>';
+                echo '<li>' . htmlspecialchars($nomes) . '</li>';
             }
             ?>
         </ul>
@@ -33,6 +43,7 @@ if (isset($_POST['mensagem'])) {
             <h2>Adicione um item</h2>
             <input type="text" name="mensagem" id="">
             <input type="submit" value="Enviar">
+            <input type="submit" name="limpar" value="Limpar Lista">
         </form>
     </main>
 </body>
