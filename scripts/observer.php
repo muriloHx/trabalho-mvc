@@ -4,7 +4,7 @@ interface Investidor //padrao que todos os observers deverão seguir
     public function update(float $val);
 }
 
-class User implements Investidor
+class User implements Investidor //observer concreto
 {
     private string $nome;
 
