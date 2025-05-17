@@ -9,12 +9,18 @@ if (isset($_POST['mensagem']) && trim($_POST['mensagem']) !== '') {
     $msg = $_POST['mensagem'];
     $controller->addItem($msg);
 
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: " . $_SERVER['PHP_SELF']); // para que as alterações sejam mostradas sem a necessiade de reiniciar a pag
     exit;
 }
 
 if (isset($_POST['limpar'])) {
     unset($_SESSION['items']);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+if (isset($_POST['pop'])) {
+    $controller->popItem();
     header("Location: " . $_SERVER['PHP_SELF']);
     exit;
 }
@@ -32,6 +38,14 @@ if (isset($_POST['limpar'])) {
 
 <body>
     <main>
+
+        <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
+            <h2>Adicione um item</h2>
+            <input type="text" name="mensagem" id="">
+            <input type="submit" value="Enviar">
+            <input type="submit" name="limpar" value="Limpar Lista">
+            <input type="submit" name="pop" value="Remover ultimo">
+        </form>
         <ul>
             <?php
             foreach ($items as $nomes) {
@@ -39,12 +53,6 @@ if (isset($_POST['limpar'])) {
             }
             ?>
         </ul>
-        <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-            <h2>Adicione um item</h2>
-            <input type="text" name="mensagem" id="">
-            <input type="submit" value="Enviar">
-            <input type="submit" name="limpar" value="Limpar Lista">
-        </form>
     </main>
 </body>
 

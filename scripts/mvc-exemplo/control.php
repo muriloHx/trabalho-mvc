@@ -15,4 +15,8 @@ class Control
     {
         $this->modelo->addItem($item);
     }
+    public function popItem()
+    {
+        $this->modelo->popItem();
+    }
 }
