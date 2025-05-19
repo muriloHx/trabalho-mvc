@@ -1,0 +1,6 @@
+/scripts/exemplo-laravel/vendor/
+/scripts/exemplo-laravel/node_modules/
+/scripts/exemplo-laravel/storage/*.key
+/scripts/exemplo-laravel/.env
+/scripts/exemplo-laravel/.env.*
+/scripts/exemplo-laravel/public/storage
